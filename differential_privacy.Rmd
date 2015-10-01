@@ -5,13 +5,18 @@ output:
     mathjax: "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 ---
 
+```{r, echo=FALSE}
+library(ggplot2)
+```
+
 ## Differental Privacy
 
 Differential Privacy is a statistical technique providing mathematical guarentees on the preservation of individual privacy in database queries. 
 
 Recently, many connection to statistical learning have emerged.
 
-## Modivation for Privacy
+
+## Motivation for Privacy
 
 Suppose we have a database $D$ that contains individual level income data for the citizens of the imaginary country of Eagleland.
 
@@ -31,7 +36,13 @@ A researcher does not have access to the database, instead they have at thier di
 
 $$ f(\text{Residence}) = \text{Total Income for All Residents} $$
 
-This means that the research has access to only aggrigate views on the database, so it should be impossible for them to determine anyone's individual income... right?
+
+## Motivation for Privacy
+
+This means that the researcher has access to only aggrigate views on the database.
+
+So it should be impossible for them to determine anyone's individual income... right?
+
 
 ## A Simple Attack
 
@@ -41,7 +52,10 @@ At time $t_0 - \epsilon$ they submit the query:
 
 $$ f(\text{Onett}) $$
 
-And at time $t_0 + \epsilon$ they submit the same query.
+And at time $t_0 + \epsilon$ they submit the same query:
+
+$$ f(\text{Onett}) $$
+
 
 ## A Simple Attack
 
@@ -49,33 +63,90 @@ The two results obtained by the researcher differ, by *exactly* Ness's income!
 
 A small bit of external information has allowed a simple attack to obtain individual level information.
 
-## This is Serious
+
+## This is Serious!
 
 Attacking databases using external information is a real issue.
 
 In ... Arvind Narayanan and Vitaly Shmatikov sucessfully deanonomyzed the Netflix competition data by attacking with the IMDB database as an external source.
 
+
 ## The Fundamental Issue
 
-The fundamental issue is that the result of our query $f$ is very sensitive to individual records in the database.
+The issue is that the result of our query $f$ is very sensitive to individual records in the database.
 
-Differntial privacy attempts to alleviate this.
+Differential privacy attempts to alleviate this.
 
-## Differential Privacy
+
+## Differential Privacy: Intuition
+
+Replace a *deterministic* query with a *random* query, so that the alteration of one row of data can only change the expected result of a query by a small amount $e^\epsilon$.
+
+
+## Differential Privacy: Definition
 
 A (randomized) query function $f$ gives $\epsilon$-*differential privacy* if, for all databases $D_1$ and $D_2$ differing in at most one element, and all (measurable) subsets $S$ of the range of $f$
 
 $$ P[f(D_1) \in S] \leq e^\epsilon \times P[f(D_2) \in S] $$
 
-I.e., the alteration of one row of data can only change the expected result of a query by a small amount $e^\epsilon$.
 
 ## Achieving Differential Privacy
 
 The simplest way to achive differntial privacy is called the Laplace mechanism.
+
+
+## Achieving Differential Privacy
+
+Recall the *Laplase* or *Double Exponential* distribution is a probability distribution on $\mathbf{R}$ wiht the density function
+
+$$ f(x; \mu; \theta) = \frac{1}{2\theta} \exp (- \frac{\left| x - \mu \right| }{\theta}) $$
+
+
+## Achieving Differential Privacy
+
+```{r ggplot}
+laplace.pdf <- function(x) 0.5 * exp(-abs(x))
+x <- seq(-2, 2, length.out=100)
+y <- laplace.pdf(x)
+ggplot() + geom_line(aes(x=x, y=y))
+```
+
+
+## Achieving Differential Privacy
 
 If $f$ is a non-random query, then the random query
 
 $$ f_{\text{rand}}(x) = f(x) + Laplace(0, \theta) $$
 
 is $\epsilon$-defferentially private for the correct choice of the dispersion parameter $\theta$.
+
+
+## Ok, But What Does This Have To Do With Learning
+
+Recall, that the *expected optimism* of a learning algoritm is
+
+$$ \omega = E_{\text{pred}} - E_{\text{train}} $$
+
+where the expectations average over all possible training and evaluation data sets for the learning algorithm.
+
+
+## The Optimism Theorem
+
+Efron's optimizm theorem relates the optimism to the influence of an observation on its predicted value
+
+$$ \omega = \frac{2}{n} \sum_{i = 1}^{n} cov(\hat\mu_i, y_i) $$
+
+a refinement using Stein's lemma makes this even more apparant (in some situations)
+
+$$ \omega \sym E \left( \sum_{i = 1}^{n} \frac{\partial \hat \mu}{\partial y_i} \right) $$
+
+
+## The Connection Philosophy
+
+Given that both privacy and optimism are related to how sensitive a query is to an observation, we should expect some connections!
+
+
+
+
+
 
