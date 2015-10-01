@@ -138,13 +138,36 @@ $$ \omega = \frac{2}{n} \sum_{i = 1}^{n} cov(\hat\mu_i, y_i) $$
 
 a refinement using Stein's lemma makes this even more apparant (in some situations)
 
-$$ \omega \sym E \left( \sum_{i = 1}^{n} \frac{\partial \hat \mu}{\partial y_i} \right) $$
+$$ \omega \sim E \left( \sum_{i = 1}^{n} \frac{\partial \hat \mu}{\partial y_i} \right) $$
 
 
 ## The Connection Philosophy
 
 Given that both privacy and optimism are related to how sensitive a query is to an observation, we should expect some connections!
 
+
+## The Connection Philosophy
+
+If we allow a modeling algorithm to access data in a differentialally private manner, then we should expect good generalization properties.
+
+
+## Example: A Noisy Catagorical
+
+Suppose our training data contains a catagorical varaible $x$ with a very large number of levels, which we expect to be related to a binary response.
+
+
+## Example: A Noisy Catagorical
+
+Using such a predictor naively can cause cause a model to overfit easily.
+
+
+## Example: A Noisy Catagorical
+
+We may hit upon the idea of summarizing the response over the catagorical
+
+$$ sx_i = \frac{1}{\# \{ x = x_i \} }  \sum_{j \mid x_j = x_i} y_j $$
+
+but this just pushes the overfitting to the summarization instead of the model fitting.
 
 
 
