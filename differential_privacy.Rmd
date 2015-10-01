@@ -170,6 +170,37 @@ $$ sx_i = \frac{1}{\# \{ x = x_i \} }  \sum_{j \mid x_j = x_i} y_j $$
 but this just pushes the overfitting to the summarization instead of the model fitting.
 
 
+## Example: A Noisy Catagorical
+
+We can resolve this by viewing the summation as a query into our training set
+
+$$ f(s) = \sum_{j \mid x_j = s} y_j $$
+
+and using the laplace mechanism to render it differentiably private!
+
+
+## Example: A Re-usable holdout
+
+Often a scientist will use a *hold out* dataset during the construction of a model to 
+
+  - Asses the expected performance of a statistical model
+  - Assist in making meta-decisions about the model: variable selection, tuning parameters, etc.
+
+
+## Example: A Re-usable holdout
+
+Unfortuantely, these uses are in direct conflict.
+
+The more decisions that are made with the assistence of a hold out, the more biased its estiamte of the model's expected performance becomes.
+
+
+## Example: A Re-usable holdout
+
+Dwork, Feldman, Hardt, Pitassi, Reingold, and Roth describe a differntially private way to query a hold out that pervents overfitting to the result.
+
+
+## Example: A Re-usable holdout
+
 
 
 
