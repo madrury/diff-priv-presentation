@@ -1,0 +1,81 @@
+---
+title: "Differential Privacy"
+output:
+  ioslides_presentation:
+    mathjax: "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+---
+
+## Differental Privacy
+
+Differential Privacy is a statistical technique providing mathematical guarentees on the preservation of individual privacy in database queries. 
+
+Recently, many connection to statistical learning have emerged.
+
+## Modivation for Privacy
+
+Suppose we have a database $D$ that contains individual level income data for the citizens of the imaginary country of Eagleland.
+
+| Person    | Residence | Income |
+| --------- |:---------:|:------:|
+| Ness      | Onett     | $1600  |
+| Pokey     | Onett     | $500   | 
+| Paula     | Twoson    | $1000  |
+| Apple Kid | Twoson    | $2500  |
+| Jeff      | Winters   | $1000  |
+| .         | .         | .      |
+
+
+## Motivation for Privacy
+
+A researcher does not have access to the database, instead they have at thier disposal a query function
+
+$$ f(\text{Residence}) = \text{Total Income for All Residents} $$
+
+This means that the research has access to only aggrigate views on the database, so it should be impossible for them to determine anyone's individual income... right?
+
+## A Simple Attack
+
+Suppose that the researcher learns, from external sources, that Ness is moving from Onett to Twoson at some time $t_0$.
+
+At time $t_0 - \epsilon$ they submit the query:
+
+$$ f(\text{Onett}) $$
+
+And at time $t_0 + \epsilon$ they submit the same query.
+
+## A Simple Attack
+
+The two results obtained by the researcher differ, by *exactly* Ness's income!
+
+A small bit of external information has allowed a simple attack to obtain individual level information.
+
+## This is Serious
+
+Attacking databases using external information is a real issue.
+
+In ... Arvind Narayanan and Vitaly Shmatikov sucessfully deanonomyzed the Netflix competition data by attacking with the IMDB database as an external source.
+
+## The Fundamental Issue
+
+The fundamental issue is that the result of our query $f$ is very sensitive to individual records in the database.
+
+Differntial privacy attempts to alleviate this.
+
+## Differential Privacy
+
+A (randomized) query function $f$ gives $\epsilon$-*differential privacy* if, for all databases $D_1$ and $D_2$ differing in at most one element, and all (measurable) subsets $S$ of the range of $f$
+
+$$ P[f(D_1) \in S] \leq e^\epsilon \times P[f(D_2) \in S] $$
+
+I.e., the alteration of one row of data can only change the expected result of a query by a small amount $e^\epsilon$.
+
+## Achieving Differential Privacy
+
+The simplest way to achive differntial privacy is called the Laplace mechanism.
+
+If $f$ is a non-random query, then the random query
+
+$$ f_{\text{rand}}(x) = f(x) + Laplace(0, \theta) $$
+
+is $\epsilon$-defferentially private for the correct choice of the dispersion parameter $\theta$.
+
