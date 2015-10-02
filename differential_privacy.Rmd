@@ -13,7 +13,7 @@ library(ggplot2)
 
 Differential Privacy is a statistical technique providing mathematical guarentees on the preservation of individual privacy in database queries. 
 
-Recently, many connection to statistical learning have emerged.
+Recently, many connections to statistical learning have emerged.
 
 
 ## Motivation for Privacy
@@ -68,19 +68,21 @@ A small bit of external information has allowed a simple attack to obtain indivi
 
 Attacking databases using external information is a real issue.
 
-In ... Arvind Narayanan and Vitaly Shmatikov sucessfully deanonomyzed the Netflix competition data by attacking with the IMDB database as an external source.
+In ... Arvind Narayanan and Vitaly Shmatikov sucessfully deanonymized the Netflix competition data by attacking with the IMDB database as an external source.
 
 
 ## The Fundamental Issue
 
-The issue is that the result of our query $f$ is very sensitive to individual records in the database.
+The result of our query $f$ is very sensitive to individual records in the database.
 
 Differential privacy attempts to alleviate this.
 
 
 ## Differential Privacy: Intuition
 
-Replace a *deterministic* query with a *random* query, so that the alteration of one row of data can only change the expected result of a query by a small amount $e^\epsilon$.
+Replace a query with a *deterministic* answer with one with a *random* answer. 
+
+Do so in a way that the alteration of one row of data can only change the expected result of the query by a small amount $e^\epsilon$.
 
 
 ## Differential Privacy: Definition
@@ -97,9 +99,9 @@ The simplest way to achive differntial privacy is called the Laplace mechanism.
 
 ## Achieving Differential Privacy
 
-Recall the *Laplase* or *Double Exponential* distribution is a probability distribution on $\mathbf{R}$ wiht the density function
+Recall the *Laplase* or *Double Exponential* distribution is a probability distribution on $\mathbf{R}$ with the density function
 
-$$ f(x; \mu; \theta) = \frac{1}{2\theta} \exp (- \frac{\left| x - \mu \right| }{\theta}) $$
+$$ f(x; \mu; \theta) = \frac{1}{2\theta} \exp \left( - \frac{\left| x - \mu \right| }{\theta} \right) $$
 
 
 ## Achieving Differential Privacy
@@ -136,17 +138,20 @@ Efron's optimizm theorem relates the optimism to the influence of an observation
 
 $$ \omega = \frac{2}{n} \sum_{i = 1}^{n} cov(\hat\mu_i, y_i) $$
 
-a refinement using Stein's lemma makes this even more apparant (in some situations)
+
+## The Optimism Theorem
+
+A refinement using Stein's lemma makes this even more apparant (under certain assumptions)
 
 $$ \omega \sim E \left( \sum_{i = 1}^{n} \frac{\partial \hat \mu}{\partial y_i} \right) $$
 
 
-## The Connection Philosophy
+## The Connection, Philisophically
 
-Given that both privacy and optimism are related to how sensitive a query is to an observation, we should expect some connections!
+Given that both privacy and model optimism are related to how sensitive a query is to an observation, we should expect some connections!
 
 
-## The Connection Philosophy
+## The Connection, Philisophically
 
 If we allow a modeling algorithm to access data in a differentialally private manner, then we should expect good generalization properties.
 
@@ -160,6 +165,11 @@ Suppose our training data contains a catagorical varaible $x$ with a very large 
 
 Using such a predictor naively can cause cause a model to overfit easily.
 
+```{r, eval = FALSE}
+# Not such a good idea, estimates too many parameters!  Overfit!
+M <- lm(y ~ factor(x))
+```
+
 
 ## Example: A Noisy Catagorical
 
@@ -172,11 +182,22 @@ but this just pushes the overfitting to the summarization instead of the model f
 
 ## Example: A Noisy Catagorical
 
-We can resolve this by viewing the summation as a query into our training set
+We can resolve this by viewing the ingredients in the summarization as a query into our training set
 
-$$ f(s) = \sum_{j \mid x_j = s} y_j $$
+$$ f(s) = \sum_{j \mid x_j = s} 1 $$
+$$ g(s) = \sum_{j \mid x_j = s} y_j $$
 
-and using the laplace mechanism to render it differentiably private!
+
+## Example: A Noisy Catagorical
+
+Using the laplace mechanism to renders these queries differentiably private
+
+$$ f(s) = \sum_{j \mid x_j = s} 1 + Laplase(0, \theta)$$
+$$ g(s) = \sum_{j \mid x_j = s} y_j + Laplase(0, \theta)$$
+
+## Example: A Noisy Catagorical
+
+Efron's theorem now informs us that this procedure should have good generalization properties!
 
 
 ## Example: A Re-usable holdout
