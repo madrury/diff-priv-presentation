@@ -258,3 +258,22 @@ Moritz Hardt and Arvim Blum describe a modification of the algorithm above that 
 Differential Privacy, while originating from a standpoint of data security, has shown very promising connections to Statistical Learning.
 
 This discipline is still in it's infancy, so there is certainly more to come!  Keep following!
+
+## References
+
+Dwork, C.: Differential Privacy: A Survey of Results (2008)
+
+Dwork C., Feldman, V., Hardt, M. Pitassi, T. Reingold, O., Roth, A.: Generalization in Adaptive Data Analysis and Holdout Reuse (2015)
+
+Narayanan A., Shmatikov, V.: Robust De-anonymization of Large Sparse Datasets (2008)
+
+Hardt M., Blum A.: The Ladder: A Reliable Leaderboard for Machine Learning Competitions (2015)
+
+
+## References
+
+Kaufman S., Rosset S.: When Does More Regularization Imply Fewer Degrees of Freedom?  Sufficient Conditions and Counter Examples from Lasso and Ridge Regression (2013)
+
+Hastie T., Tibshirani R., Friedman J.: The Elements of Statistical Learning (2009)
+
+Wikipeida: Differential Privacy
