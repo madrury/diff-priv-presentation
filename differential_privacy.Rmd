@@ -1,5 +1,6 @@
 ---
 title: "Differential Privacy"
+author: "Matthew Drury"
 output:
   ioslides_presentation:
       self_contained: yes
@@ -11,7 +12,7 @@ library(ggplot2)
 
 ## Differental Privacy
 
-Differential Privacy is a statistical technique providing mathematical guarentees on the preservation of individual privacy in database queries. 
+Differential Privacy is a statistical technique providing mathematical guarantees on the preservation of individual privacy in database queries. 
 
 Recently, many connections to statistical learning have emerged.
 
@@ -32,14 +33,14 @@ Suppose we have a database $D$ that contains individual level income data for th
 
 ## Motivation for Privacy
 
-A researcher does not have access to the database, instead they have at thier disposal a query function
+A researcher does not have access to the database, instead they have at their disposal a query function
 
 $$ f(\text{Residence}) = \text{Total Income for All Residents} $$
 
 
 ## Motivation for Privacy
 
-This means that the researcher has access to only aggrigate views on the database.
+This means that the researcher has access to only aggregate views on the database.
 
 So it should be impossible for them to determine anyone's individual income... right?
 
@@ -68,9 +69,9 @@ A small bit of external information has allowed a simple attack to obtain indivi
 
 Attacking databases using external information is a real issue.
 
-In 2008 Arvind Narayanan and Vitaly Shmatikov sucessfully deanonymized the Netflix competition data by attacking with the IMDB database as an external source.
+In 2008 Arvind Narayanan and Vitaly Shmatikov successfully deanonymized the Netflix competition data by attacking with the IMDB database as an external source.
 
-Harvard reseacrcher Latanya Sweeney attacked the  Massachusetts Group Insurance Commission medical database by linking it with voter registration records, allowing her to identify the medical history of the Governor.
+Harvard researcher Latanya Sweeney attacked the  Massachusetts Group Insurance Commission medical database by linking it with voter registration records, allowing her to identify the medical history of the Governor.
 
 ## The Fundamental Issue
 
@@ -95,7 +96,7 @@ $$ P[f(D_1) \in S] \leq e^\epsilon \times P[f(D_2) \in S] $$
 
 ## Achieving Differential Privacy
 
-The simplest way to achive differntial privacy is called the Laplace mechanism.
+The simplest way to achieve differential privacy is called the Laplace mechanism.
 
 
 ## Achieving Differential Privacy
@@ -121,12 +122,12 @@ If $f$ is a non-random query, then the random query
 
 $$ f_{\text{rand}}(x) = f(x) + Laplace(0, \theta) $$
 
-is $\epsilon$-defferentially private for the correct choice of the dispersion parameter $\theta$.
+is $\epsilon$-differential private for the correct choice of the dispersion parameter $\theta$.
 
 
 ## Ok, But What Does This Have To Do With Learning
 
-Recall, that the *expected optimism* of a learning algoritm is
+Recall, that the *expected optimism* of a learning algorithm is
 
 $$ \omega = E_{\text{pred}} - E_{\text{train}} $$
 
@@ -135,14 +136,14 @@ where the expectations average over all possible training and evaluation data se
 
 ## The Optimism Theorem
 
-Efron's optimizm theorem relates the optimism to the influence of an observation on its predicted value
+Efron's optimize theorem relates the optimism to the influence of an observation on its predicted value
 
 $$ \omega = \frac{2}{n} \sum_{i = 1}^{n} cov(\hat\mu_i, y_i) $$
 
 
 ## The Optimism Theorem
 
-A refinement using Stein's lemma makes this even more apparant (under certain assumptions)
+A refinement using Stein's lemma makes this even more apparent (under certain assumptions)
 
 $$ \omega \sim E \left( \sum_{i = 1}^{n} \frac{\partial \hat \mu}{\partial y_i} \right) $$
 
@@ -159,12 +160,12 @@ If we allow a modeling algorithm to access data in a differentialally private ma
 
 ## Example: A Noisy Catagorical
 
-Suppose our training data contains a catagorical varaible $x$ with a very large number of levels, which we expect to be related to a binary response.
+Suppose our training data contains a categorical variable $x$ with a very large number of levels, which we expect to be related to a binary response.
 
 
 ## Example: A Noisy Catagorical
 
-Using such a predictor naively can cause cause a model to overfit easily.
+Using such a predictor naively can cause cause a model to over fit easily.
 
 ```{r, eval = FALSE}
 # Not such a good idea, estimates too many parameters!  Overfit!
@@ -174,11 +175,11 @@ M <- lm(y ~ factor(x))
 
 ## Example: A Noisy Catagorical
 
-We may hit upon the idea of summarizing the response over the catagorical
+We may hit upon the idea of summarizing the response over the categorical
 
 $$ sx_i = \frac{1}{\# \{ x = x_i \} }  \sum_{j \mid x_j = x_i} y_j $$
 
-but this just pushes the overfitting to the summarization instead of the model fitting.
+but this just pushes the over fitting to the summarization instead of the model fitting.
 
 
 ## Example: A Noisy Catagorical
@@ -191,10 +192,10 @@ $$ g(s) = \sum_{j \mid x_j = s} y_j $$
 
 ## Example: A Noisy Catagorical
 
-Using the laplace mechanism renders these queries differentiably private
+Using the Laplace mechanism renders these queries differentiably private
 
-$$ f(s) = \sum_{j \mid x_j = s} 1 + Laplase(0, \theta)$$
-$$ g(s) = \sum_{j \mid x_j = s} y_j + Laplase(0, \theta)$$
+$$ f(s) = \sum_{j \mid x_j = s} 1 + Laplace(0, \theta)$$
+$$ g(s) = \sum_{j \mid x_j = s} y_j + Laplace(0, \theta)$$
 
 ## Example: A Noisy Catagorical
 
@@ -203,7 +204,7 @@ Efron's theorem now informs us that this procedure should have good generalizati
 
 ## Example: A Re-usable holdout
 
-Often a scientist will use a *hold out* dataset during the construction of a model to 
+Often a scientist will use a *hold out* data set during the construction of a model to 
 
   - Asses the expected performance of a statistical model
   - Assist in making meta-decisions about the model: variable selection, tuning parameters, etc.
@@ -211,14 +212,14 @@ Often a scientist will use a *hold out* dataset during the construction of a mod
 
 ## Example: A Re-usable holdout
 
-Unfortuantely, these uses are in direct conflict.
+Unfortunately, these uses are in direct conflict.
 
-The more decisions that are made with the assistence of a hold out, the more biased its estiamte of the model's expected performance becomes.
+The more decisions that are made with the assistance of a hold out, the more biased its estimate of the model's expected performance becomes.
 
 
 ## Example: A Re-usable holdout
 
-Dwork, Feldman, Hardt, Pitassi, Reingold, and Roth describe a differntially private way to query a hold out that pervents overfitting to the result.
+Dwork, Feldman, Hardt, Pitassi, Reingold, and Roth describe a differntially private way to query a hold out that prevents over fitting to the result.
 
 
 ## Example: A Re-usable holdout
@@ -227,7 +228,7 @@ Suppose we have a learner $\phi$ trained on a data set $S_{t}$, and a hold out $
 
 The algorithm requires a parameter $T$, the threshold.
 
-The modeler requests the pperformance of the learner $\phi$.
+The modeler requests the performance of the learner $\phi$.
 
 
 ## Example: A Re-usable holdout
@@ -247,13 +248,13 @@ Otherwise, output $E_{t}(\phi)$.
 
 ## Example: A Re-usable holdout
 
-According to Dwork, et. al. this mechanism allows the modeler to avoid overfitting to thier hold out in a differentiably private manner for a suprisingly long time.
+According to Dwork, et. al. this mechanism allows the modeler to avoid over fitting to their hold out in a differentiably private manner for a surprisingly long time.
 
-Moritz Hardt and Arvim Blum describe a modification of the algorithm above that applies to Machine Learning competition leaderboards.
+Moritz Hardt and Arvim Blum describe a modification of the algorithm above that applies to Machine Learning competition leader boards.
 
 
 ## Summary
 
 Differential Privacy, while originating from a standpoint of data security, has shown very promising connections to Statistical Learning.
 
-This dicipline is still in it's infancy, so there is certainly more to come!  Keep following!
+This discipline is still in it's infancy, so there is certainly more to come!  Keep following!
