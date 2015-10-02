@@ -2,7 +2,7 @@
 title: "Differential Privacy"
 output:
   ioslides_presentation:
-    mathjax: "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+      self_contained: yes
 ---
 
 ```{r, echo=FALSE}
@@ -68,8 +68,9 @@ A small bit of external information has allowed a simple attack to obtain indivi
 
 Attacking databases using external information is a real issue.
 
-In ... Arvind Narayanan and Vitaly Shmatikov sucessfully deanonymized the Netflix competition data by attacking with the IMDB database as an external source.
+In 2008 Arvind Narayanan and Vitaly Shmatikov sucessfully deanonymized the Netflix competition data by attacking with the IMDB database as an external source.
 
+Harvard reseacrcher Latanya Sweeney attacked the  Massachusetts Group Insurance Commission medical database by linking it with voter registration records, allowing her to identify the medical history of the Governor.
 
 ## The Fundamental Issue
 
@@ -190,7 +191,7 @@ $$ g(s) = \sum_{j \mid x_j = s} y_j $$
 
 ## Example: A Noisy Catagorical
 
-Using the laplace mechanism to renders these queries differentiably private
+Using the laplace mechanism renders these queries differentiably private
 
 $$ f(s) = \sum_{j \mid x_j = s} 1 + Laplase(0, \theta)$$
 $$ g(s) = \sum_{j \mid x_j = s} y_j + Laplase(0, \theta)$$
@@ -222,6 +223,37 @@ Dwork, Feldman, Hardt, Pitassi, Reingold, and Roth describe a differntially priv
 
 ## Example: A Re-usable holdout
 
+Suppose we have a learner $\phi$ trained on a data set $S_{t}$, and a hold out $S_{h}$.
+
+The algorithm requires a parameter $T$, the threshold.
+
+The modeler requests the pperformance of the learner $\phi$.
 
 
+## Example: A Re-usable holdout
 
+Sample $\nu \sim Laplace(0, \theta_0)$.
+
+If 
+
+$$\| E_{t}(\phi) - E_{h}(\phi) \| > T + \nu$$ 
+
+then output 
+
+$$E_{h} + Laplace(0, \theta_1)$$
+
+Otherwise, output $E_{t}(\phi)$.
+
+
+## Example: A Re-usable holdout
+
+According to Dwork, et. al. this mechanism allows the modeler to avoid overfitting to thier hold out in a differentiably private manner for a suprisingly long time.
+
+Moritz Hardt and Arvim Blum describe a modification of the algorithm above that applies to Machine Learning competition leaderboards.
+
+
+## Summary
+
+Differential Privacy, while originating from a standpoint of data security, has shown very promising connections to Statistical Learning.
+
+This dicipline is still in it's infancy, so there is certainly more to come!  Keep following!
