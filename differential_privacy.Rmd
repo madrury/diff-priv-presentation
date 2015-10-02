@@ -28,7 +28,6 @@ Suppose we have a database $D$ that contains individual level income data for th
 | Paula     | Twoson    | $1000  |
 | Apple Kid | Twoson    | $2500  |
 | Jeff      | Winters   | $1000  |
-| .         | .         | .      |
 
 
 ## Motivation for Privacy
@@ -145,7 +144,7 @@ $$ \omega = \frac{2}{n} \sum_{i = 1}^{n} cov(\hat\mu_i, y_i) $$
 
 A refinement using Stein's lemma makes this even more apparent (under certain assumptions)
 
-$$ \omega \sim E \left( \sum_{i = 1}^{n} \frac{\partial \hat \mu}{\partial y_i} \right) $$
+$$ \omega \propto E \left( \sum_{i = 1}^{n} \frac{\partial \hat \mu}{\partial y_i} \right) $$
 
 
 ## The Connection, Philisophically
