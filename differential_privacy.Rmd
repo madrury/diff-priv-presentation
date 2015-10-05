@@ -109,9 +109,9 @@ The simplest way to achieve differential privacy is called the Laplace mechanism
 
 ## Achieving Differential Privacy
 
-Recall the *Laplase* or *Double Exponential* distribution is a probability distribution on $\mathbf{R}$ with the density function
+Recall the *Laplace* or *Double Exponential* distribution is a probability distribution on $\mathbf{R}$ with the density function
 
-$$ f(x; \mu; \theta) = \frac{1}{2\theta} \exp \left( - \frac{\left| x - \mu \right| }{\theta} \right) $$
+$$ f(x; \mu, \theta) = \frac{1}{2\theta} \exp \left( - \frac{\left| x - \mu \right| }{\theta} \right) $$
 
 
 ## Achieving Differential Privacy
@@ -139,14 +139,16 @@ Recall, that the *expected optimism* of a learning algorithm is
 
 $$ \omega = E_{\text{test}} - E_{\text{train}} $$
 
-where $E$ stands for *expected error*, and expectations average over all possible training and testing data sets for the learning algorithm.
+where $E$ stands for *expected error*.
+
+The expectations average over all possible training and testing data sets for the learning algorithm.
 
 
 ## The Optimism Theorem
 
 Efron's optimism theorem relates the optimism to the influence of an observation on its predicted value
 
-$$ \omega \prop \sum_{i = 1}^{n} cov(\hat\mu_i, y_i) $$
+$$ \omega \propto \sum_{i = 1}^{n} cov(\hat\mu_i, y_i) $$
 
 
 ## The Optimism Theorem
@@ -220,7 +222,7 @@ Efron's theorem now informs us that this procedure should have good generalizati
 
 Often a scientist will use a *hold out* data set during the construction of a model to 
 
-  - Asses the expected performance of a statistical model
+  - Assess the expected performance of a statistical model
   - Assist in making meta-decisions about the model: variable selection, tuning parameters, etc.
 
 
