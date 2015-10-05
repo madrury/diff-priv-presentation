@@ -1,6 +1,6 @@
 ---
 title: "Differential Privacy"
-author: "Matthew Drury"
+author: "Matthew Drury (matthew.drury.83@gmail.com)"
 output:
   ioslides_presentation:
       self_contained: yes
@@ -32,27 +32,27 @@ Suppose we have a database $D$ that contains individual level income data for th
 
 ## Motivation for Privacy
 
-A researcher does not have access to the database, instead they have at thier disposal a query function
+A researcher does not have direct access to the database, instead they have at thier disposal a query function
 
 $$ f(\text{Residence}) = \text{Total Income for All Residents} $$
 
 
 ## Motivation for Privacy
 
-This means that the researcher has access to only aggregate views on the database.
+This means that the researcher may only access aggregate views on the database.
 
-So it should be impossible for them to determine anyone's individual income... right?
+So it *should* be impossible for them to determine anyone's individual income... right?
 
 
 ## A Simple Attack
 
 Suppose that the researcher learns, from external sources, that Ness is moving from Onett to Twoson at some time $t_0$.
 
-At time $t_0 - \epsilon$ they submit the query:
+Immediately before his move, the analyst submits the query:
 
 $$ f(\text{Onett}) $$
 
-And at time $t_0 + \epsilon$ they submit the same query:
+Immediately after the move, they submit the same query:
 
 $$ f(\text{Onett}) $$
 
@@ -68,9 +68,16 @@ A small bit of external information has allowed a simple attack to obtain indivi
 
 Attacking databases using external information is a real issue.
 
+
+## The Netfilx Data
+
 In 2008 Arvind Narayanan and Vitaly Shmatikov sucessfully deanonymized the Netflix competition data by attacking with the IMDB database as an external source.
 
+
+## The MASS Health Records Data
+
 Harvard researcher Latanya Sweeney attacked the  Massachusetts Group Insurance Commission medical database by linking it with voter registration records, allowing her to identify the medical history of the Governor.
+
 
 ## The Fundamental Issue
 
@@ -130,33 +137,35 @@ is $\epsilon$-differential private for the correct choice of the dispersion para
 
 Recall, that the *expected optimism* of a learning algorithm is
 
-$$ \omega = E_{\text{pred}} - E_{\text{train}} $$
+$$ \omega = E_{\text{test}} - E_{\text{train}} $$
 
-where the expectations average over all possible training and evaluation data sets for the learning algorithm.
+where $E$ stands for *expected error*, and expectations average over all possible training and testing data sets for the learning algorithm.
 
 
 ## The Optimism Theorem
 
 Efron's optimism theorem relates the optimism to the influence of an observation on its predicted value
 
-$$ \omega = \frac{2}{n} \sum_{i = 1}^{n} cov(\hat\mu_i, y_i) $$
+$$ \omega \prop \sum_{i = 1}^{n} cov(\hat\mu_i, y_i) $$
 
 
 ## The Optimism Theorem
 
-A refinement using Stein's lemma makes this even more apparent (under certain assumptions)
+A refinement, using Stein's lemma, makes this even more apparent (under certain assumptions)
 
 $$ \omega \propto E \left( \sum_{i = 1}^{n} \frac{\partial \hat \mu}{\partial y_i} \right) $$
 
 
 ## The Connection, Philisophically
 
-Given that both privacy and model optimism are related to how sensitive a query is to an observation, we should expect some connections!
+Given that both privacy and model optimism are related to how sensitive a query is to the value of an observation, we should expect some connections!
 
 
 ## The Connection, Philisophically
 
-If we allow a modeling algorithm to access data in a differentialally private manner, then we should expect good generalization properties.
+More precisely:
+
+If we allow a modeling algorithm to access data in a differentialy private manner, then we should expect good generalization properties.
 
 
 ## Example: A Noisy Catagorical
@@ -173,14 +182,18 @@ Using such a predictor naively can cause cause a model to over fit easily.
 M <- glm(y ~ factor(x), family="binomial")
 ```
 
+This can be exaggerated if we are interested in a non-parameteric model
+
 
 ## Example: A Noisy Catagorical
 
 We may hit upon the idea of summarizing the response over the categorical
 
-$$ sx_i = \frac{1}{\# \{x \mid x = x_i \} }  \sum_{j \mid x_j = x_i} y_j $$
+$$ (sx)_i = \frac{1}{\# \{x \mid x = x_i \} }  \sum_{j \mid x_j = x_i} y_j $$
 
-but this just pushes the over fitting to the summarization instead of the model fitting.
+then fitting $sx$ in our model as a single predictor, estimating just one parameter.
+
+But, this just pushes the over fitting to the summarization instead of the model fitting.
 
 
 ## Example: A Noisy Catagorical
@@ -193,7 +206,7 @@ $$ g(s) = \sum_{j \mid x_j = s} y_j $$
 
 ## Example: A Noisy Catagorical
 
-Using the Laplace mechanism renders these queries differentiably private
+Using the Laplace mechanism renders these queries differentialy private
 
 $$ f(s) = \sum_{j \mid x_j = s} 1 + Laplace(0, \theta_0)$$
 $$ g(s) = \sum_{j \mid x_j = s} y_j + Laplace(0, \theta_1)$$
@@ -220,7 +233,7 @@ The more decisions that are made with the assistance of a hold out, the more bia
 
 ## Example: A Re-usable holdout
 
-Dwork, Feldman, Hardt, Pitassi, Reingold, and Roth describe a differentially private way to query a hold out that prevents over fitting to the result.
+Dwork, Feldman, Hardt, Pitassi, Reingold, and Roth describe a differentialy private way to query a hold out that prevents over fitting to the result.
 
 
 ## Example: A Re-usable holdout
@@ -254,7 +267,7 @@ Otherwise, output the training performance $E_{t}(\phi)$.
 
 ## Example: A Re-usable holdout
 
-According to Dwork, et. al. this mechanism allows the modeler to avoid over fitting to their hold out in a differentiably private manner for a surprisingly long time.
+According to Dwork, et. al. this mechanism allows the modeler to avoid over fitting to their hold out in a differentialy private manner for a surprisingly long time.
 
 Moritz Hardt and Arvim Blum describe a modification of the algorithm above that applies to Machine Learning competition leader boards.
 
