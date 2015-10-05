@@ -218,7 +218,7 @@ $$ g(s) = \sum_{j \mid x_j = s} y_j + Laplace(0, \theta_1)$$
 Efron's theorem now informs us that this procedure should have good generalization properties!
 
 
-## Example: A Re-usable holdout
+## Example: A Reusable Holdout
 
 Often a scientist will use a *hold out* data set during the construction of a model to 
 
@@ -226,19 +226,19 @@ Often a scientist will use a *hold out* data set during the construction of a mo
   - Assist in making meta-decisions about the model: variable selection, tuning parameters, etc.
 
 
-## Example: A Re-usable holdout
+## Example: A Reusable Holdout
 
 Unfortuantely, these uses are in direct conflict.
 
 The more decisions that are made with the assistance of a hold out, the more biased its estimate of the model's expected performance becomes.
 
 
-## Example: A Re-usable holdout
+## Example: A Reusable Holdout
 
 Dwork, Feldman, Hardt, Pitassi, Reingold, and Roth describe a differentialy private way to query a hold out that prevents over fitting to the result.
 
 
-## Example: A Re-usable holdout
+## Example: A Reusable Holdout
 
 Suppose we have a learner $\phi$ trained on a data set $S_{t}$.
 
@@ -247,12 +247,12 @@ Also, suppose we have a hold out data set $S_{h}$.
 The algorithm requires a parameter $T$, the threshold.
 
 
-## Example: A Re-usable holdout
+## Example: A Reusable Holdout
 
 The modeler requests the performance of the learner $\phi$ trained on $S_{t}$.
 
 
-## Example: A Re-usable holdout
+## Example: A Reusable Holdout (Approximately)
 
 Sample $\nu \sim Laplace(0, \theta_0)$.
 
@@ -267,7 +267,7 @@ $$E_{h} + Laplace(0, \theta_1)$$
 Otherwise, output the training performance $E_{t}(\phi)$.
 
 
-## Example: A Re-usable holdout
+## Example: A Reusable Holdout
 
 According to Dwork, et. al. this mechanism allows the modeler to avoid over fitting to their hold out in a differentialy private manner for a surprisingly long time.
 
@@ -296,5 +296,7 @@ Hardt M., Blum A.: The Ladder: A Reliable Leaderboard for Machine Learning Compe
 Kaufman S., Rosset S.: When Does More Regularization Imply Fewer Degrees of Freedom?  Sufficient Conditions and Counter Examples from Lasso and Ridge Regression (2013)
 
 Hastie T., Tibshirani R., Friedman J.: The Elements of Statistical Learning (2009)
+
+Bilenko, M.: Many Shades of Scale: Big Learning Beyond Big Data (Presentation, MLConf Seattle, 2015)
 
 Wikipeida: Differential Privacy
