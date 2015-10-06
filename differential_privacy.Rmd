@@ -139,7 +139,7 @@ Recall, that the *expected optimism* of a learning algorithm is
 
 $$ \omega = E_{\text{test}} - E_{\text{train}} $$
 
-where $E$ stands for *expected error*.
+Where $E$ stands for *expected error*.
 
 The expectations average over all possible training and testing data sets for the learning algorithm.
 
@@ -167,15 +167,15 @@ Given that both privacy and model optimism are related to how sensitive a query 
 
 More precisely:
 
-If we allow a modeling algorithm to access data in a differentialy private manner, then we should expect good generalization properties.
+If we allow a modeling algorithm to access data in a differentially private manner, then we should expect good generalization properties.
 
 
-## Example: A Noisy Catagorical
+## Example: A Noisy Categorical
 
 Suppose our training data contains a categorical variable $x$ with a very large number of levels, which we expect to be predictive of a binary response.
 
 
-## Example: A Noisy Catagorical
+## Example: A Noisy Categorical
 
 Using such a predictor naively can cause cause a model to over fit easily.
 
@@ -184,10 +184,10 @@ Using such a predictor naively can cause cause a model to over fit easily.
 M <- glm(y ~ factor(x), family="binomial")
 ```
 
-This can be exaggerated if we are interested in a non-parameteric model
+This can be exaggerated if we are interested in a non-parametric model
 
 
-## Example: A Noisy Catagorical
+## Example: A Noisy Categorical
 
 We may hit upon the idea of summarizing the response over the categorical
 
@@ -198,7 +198,7 @@ then fitting $sx$ in our model as a single predictor, estimating just one parame
 But, this just pushes the over fitting to the summarization instead of the model fitting.
 
 
-## Example: A Noisy Catagorical
+## Example: A Noisy Categorical
 
 We can resolve this by viewing the ingredients in the summarization as two queries into our training set
 
@@ -206,14 +206,14 @@ $$ f(s) = \sum_{j \mid x_j = s} 1 $$
 $$ g(s) = \sum_{j \mid x_j = s} y_j $$
 
 
-## Example: A Noisy Catagorical
+## Example: A Noisy Categorical
 
-Using the Laplace mechanism renders these queries differentialy private
+Using the Laplace mechanism renders these queries differentially private
 
 $$ f(s) = \sum_{j \mid x_j = s} 1 + Laplace(0, \theta_0)$$
 $$ g(s) = \sum_{j \mid x_j = s} y_j + Laplace(0, \theta_1)$$
 
-## Example: A Noisy Catagorical
+## Example: A Noisy Categorical
 
 Efron's theorem now informs us that this procedure should have good generalization properties!
 
@@ -235,7 +235,7 @@ The more decisions that are made with the assistance of a hold out, the more bia
 
 ## Example: A Reusable Holdout
 
-Dwork, Feldman, Hardt, Pitassi, Reingold, and Roth describe a differentialy private way to query a hold out that prevents over fitting to the result.
+Dwork, Feldman, Hardt, Pitassi, Reingold, and Roth describe a differentially private way to query a hold out that prevents over fitting to the result.
 
 
 ## Example: A Reusable Holdout
@@ -260,7 +260,7 @@ If the performance evaluated on the training set is different from the performan
 
 $$\| E_{t}(\phi) - E_{h}(\phi) \| > T + \nu$$ 
 
-then output a preterbed version of the hold out performance
+then output a perturbed version of the hold out performance
 
 $$E_{h} + Laplace(0, \theta_1)$$
 
@@ -269,7 +269,7 @@ Otherwise, output the training performance $E_{t}(\phi)$.
 
 ## Example: A Reusable Holdout
 
-According to Dwork, et. al. this mechanism allows the modeler to avoid over fitting to their hold out in a differentialy private manner for a surprisingly long time.
+According to Dwork, et. al. this mechanism allows the modeler to avoid over fitting to their hold out in a differentially private manner for a surprisingly long time.
 
 Moritz Hardt and Arvim Blum describe a modification of the algorithm above that applies to Machine Learning competition leader boards.
 
@@ -299,4 +299,4 @@ Hastie T., Tibshirani R., Friedman J.: The Elements of Statistical Learning (200
 
 Bilenko, M.: Many Shades of Scale: Big Learning Beyond Big Data (Presentation, MLConf Seattle, 2015)
 
-Wikipeida: Differential Privacy
+ikipeida: Differential Privacy
