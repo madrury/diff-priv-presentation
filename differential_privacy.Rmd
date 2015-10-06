@@ -10,7 +10,7 @@ output:
 library(ggplot2)
 ```
 
-## Differental Privacy
+## Differential Privacy
 
 Differential Privacy is a statistical technique providing mathematical guarantees on the preservation of individual privacy in database queries. 
 
@@ -32,7 +32,7 @@ Suppose we have a database $D$ that contains individual level income data for th
 
 ## Motivation for Privacy
 
-A researcher does not have direct access to the database, instead they have at thier disposal a query function
+A researcher does not have direct access to the database, instead they have at their disposal a query function
 
 $$ f(\text{Residence}) = \text{Total Income for All Residents} $$
 
@@ -69,9 +69,9 @@ A small bit of external information has allowed a simple attack to obtain indivi
 Attacking databases using external information is a real issue.
 
 
-## The Netfilx Data
+## The Netflix Data
 
-In 2008 Arvind Narayanan and Vitaly Shmatikov sucessfully deanonymized the Netflix competition data by attacking with the IMDB database as an external source.
+In 2008 Arvind Narayanan and Vitaly Shmatikov successfully deanonymized the Netflix competition data by attacking with the IMDB database as an external source.
 
 
 ## The MASS Health Records Data
@@ -158,12 +158,12 @@ A refinement, using Stein's lemma, makes this even more apparent (under certain 
 $$ \omega \propto E \left( \sum_{i = 1}^{n} \frac{\partial \hat \mu}{\partial y_i} \right) $$
 
 
-## The Connection, Philisophically
+## The Connection, Philosophically
 
 Given that both privacy and model optimism are related to how sensitive a query is to the value of an observation, we should expect some connections!
 
 
-## The Connection, Philisophically
+## The Connection, Philosophically
 
 More precisely:
 
@@ -228,7 +228,7 @@ Often a scientist will use a *hold out* data set during the construction of a mo
 
 ## Example: A Reusable Holdout
 
-Unfortuantely, these uses are in direct conflict.
+Unfortunately, these uses are in direct conflict.
 
 The more decisions that are made with the assistance of a hold out, the more biased its estimate of the model's expected performance becomes.
 
@@ -256,7 +256,7 @@ The modeler requests the performance of the learner $\phi$ trained on $S_{t}$.
 
 Sample $\nu \sim Laplace(0, \theta_0)$.
 
-If the perfomance evaluated on the training set is different from the performace on the hold out
+If the performance evaluated on the training set is different from the performance on the hold out
 
 $$\| E_{t}(\phi) - E_{h}(\phi) \| > T + \nu$$ 
 
