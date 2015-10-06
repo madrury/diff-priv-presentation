@@ -1,0 +1,12 @@
+Differential Privacy Introduction
+=================================
+
+A presentation for the Data Science pop-up in Seattle, October 2015.
+
+Covers the following outline:
+
+  - Motivation for privacy - simple attacks.
+  - Definition of Differential Privacy.
+  - Connection to Statistical Learning
+  - Example: Learning with Counts
+  - Example: Re-usable Hold Out

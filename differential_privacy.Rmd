@@ -10,7 +10,7 @@ output:
 library(ggplot2)
 ```
 
-## Differental Privacy
+## Differential Privacy
 
 Differential Privacy is a statistical technique providing mathematical guarantees on the preservation of individual privacy in database queries. 
 
@@ -32,7 +32,7 @@ Suppose we have a database $D$ that contains individual level income data for th
 
 ## Motivation for Privacy
 
-A researcher does not have direct access to the database, instead they have at thier disposal a query function
+A researcher does not have direct access to the database, instead they have at their disposal a query function
 
 $$ f(\text{Residence}) = \text{Total Income for All Residents} $$
 
@@ -69,9 +69,9 @@ A small bit of external information has allowed a simple attack to obtain indivi
 Attacking databases using external information is a real issue.
 
 
-## The Netfilx Data
+## The Netflix Data
 
-In 2008 Arvind Narayanan and Vitaly Shmatikov sucessfully deanonymized the Netflix competition data by attacking with the IMDB database as an external source.
+In 2008 Arvind Narayanan and Vitaly Shmatikov successfully deanonymized the Netflix competition data by attacking with the IMDB database as an external source.
 
 
 ## The MASS Health Records Data
@@ -109,9 +109,9 @@ The simplest way to achieve differential privacy is called the Laplace mechanism
 
 ## Achieving Differential Privacy
 
-Recall the *Laplase* or *Double Exponential* distribution is a probability distribution on $\mathbf{R}$ with the density function
+Recall the *Laplace* or *Double Exponential* distribution is a probability distribution on $\mathbf{R}$ with the density function
 
-$$ f(x; \mu; \theta) = \frac{1}{2\theta} \exp \left( - \frac{\left| x - \mu \right| }{\theta} \right) $$
+$$ f(x; \mu, \theta) = \frac{1}{2\theta} \exp \left( - \frac{\left| x - \mu \right| }{\theta} \right) $$
 
 
 ## Achieving Differential Privacy
@@ -139,14 +139,16 @@ Recall, that the *expected optimism* of a learning algorithm is
 
 $$ \omega = E_{\text{test}} - E_{\text{train}} $$
 
-where $E$ stands for *expected error*, and expectations average over all possible training and testing data sets for the learning algorithm.
+where $E$ stands for *expected error*.
+
+The expectations average over all possible training and testing data sets for the learning algorithm.
 
 
 ## The Optimism Theorem
 
 Efron's optimism theorem relates the optimism to the influence of an observation on its predicted value
 
-$$ \omega \prop \sum_{i = 1}^{n} cov(\hat\mu_i, y_i) $$
+$$ \omega \propto \sum_{i = 1}^{n} cov(\hat\mu_i, y_i) $$
 
 
 ## The Optimism Theorem
@@ -156,12 +158,12 @@ A refinement, using Stein's lemma, makes this even more apparent (under certain 
 $$ \omega \propto E \left( \sum_{i = 1}^{n} \frac{\partial \hat \mu}{\partial y_i} \right) $$
 
 
-## The Connection, Philisophically
+## The Connection, Philosophically
 
 Given that both privacy and model optimism are related to how sensitive a query is to the value of an observation, we should expect some connections!
 
 
-## The Connection, Philisophically
+## The Connection, Philosophically
 
 More precisely:
 
@@ -216,27 +218,27 @@ $$ g(s) = \sum_{j \mid x_j = s} y_j + Laplace(0, \theta_1)$$
 Efron's theorem now informs us that this procedure should have good generalization properties!
 
 
-## Example: A Re-usable holdout
+## Example: A Reusable Holdout
 
 Often a scientist will use a *hold out* data set during the construction of a model to 
 
-  - Asses the expected performance of a statistical model
+  - Assess the expected performance of a statistical model
   - Assist in making meta-decisions about the model: variable selection, tuning parameters, etc.
 
 
-## Example: A Re-usable holdout
+## Example: A Reusable Holdout
 
-Unfortuantely, these uses are in direct conflict.
+Unfortunately, these uses are in direct conflict.
 
 The more decisions that are made with the assistance of a hold out, the more biased its estimate of the model's expected performance becomes.
 
 
-## Example: A Re-usable holdout
+## Example: A Reusable Holdout
 
 Dwork, Feldman, Hardt, Pitassi, Reingold, and Roth describe a differentialy private way to query a hold out that prevents over fitting to the result.
 
 
-## Example: A Re-usable holdout
+## Example: A Reusable Holdout
 
 Suppose we have a learner $\phi$ trained on a data set $S_{t}$.
 
@@ -245,16 +247,16 @@ Also, suppose we have a hold out data set $S_{h}$.
 The algorithm requires a parameter $T$, the threshold.
 
 
-## Example: A Re-usable holdout
+## Example: A Reusable Holdout
 
 The modeler requests the performance of the learner $\phi$ trained on $S_{t}$.
 
 
-## Example: A Re-usable holdout
+## Example: A Reusable Holdout (Approximately)
 
 Sample $\nu \sim Laplace(0, \theta_0)$.
 
-If the perfomance evaluated on the training set is different from the performace on the hold out
+If the performance evaluated on the training set is different from the performance on the hold out
 
 $$\| E_{t}(\phi) - E_{h}(\phi) \| > T + \nu$$ 
 
@@ -265,7 +267,7 @@ $$E_{h} + Laplace(0, \theta_1)$$
 Otherwise, output the training performance $E_{t}(\phi)$.
 
 
-## Example: A Re-usable holdout
+## Example: A Reusable Holdout
 
 According to Dwork, et. al. this mechanism allows the modeler to avoid over fitting to their hold out in a differentialy private manner for a surprisingly long time.
 
@@ -294,5 +296,7 @@ Hardt M., Blum A.: The Ladder: A Reliable Leaderboard for Machine Learning Compe
 Kaufman S., Rosset S.: When Does More Regularization Imply Fewer Degrees of Freedom?  Sufficient Conditions and Counter Examples from Lasso and Ridge Regression (2013)
 
 Hastie T., Tibshirani R., Friedman J.: The Elements of Statistical Learning (2009)
+
+Bilenko, M.: Many Shades of Scale: Big Learning Beyond Big Data (Presentation, MLConf Seattle, 2015)
 
 Wikipeida: Differential Privacy
